@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 th:text="${'hello thymeleaf world'}"></h1>
+	
+	<ul>
+		<!-- th:each = "변수" : ${목록} 
+		forEach와 비슷한 기능 -->
+		<li th:each="dto : ${list}">[[${dto}]]</li>
+	</ul>
+	<hr />
+	<ul>
+		<!-- 객체, 변수 -->
+		<li th:each="dto, state : ${list}">
+			<!-- 지정한 변수에 .index를 붙여주면 0부터 순서대로 숫자를 붙일 수 있다 -->
+			[[${state.index}]] --- [[${dto}]]
+		</li>
+	</ul>
+
+	<h2>제어문 처리</h2>
+	<p>제어문 th:if ~~ unless, 삼항연산자 스타일 사용할 수 있음</p>
+	<hr>
+	<ul>
+		<!-- sno가 3의 배수인 애들만 표시됨(c:if와 기능 비슷함) -->
+		<li th:each="dto, state : ${list}" th:if="${dto.sno%3==0}">
+			[[${dto}]]
+		</li>
+	</ul>
+	<hr>
+
+	<ul>
+		<li th:each="dto, state : ${list}">
+			<!-- sno값이 3으로 나누어 떨어질 때만 sno값 표시하기 -->
+			<span th:if="${dto.sno%3 == 0}" th:text="${'------------'+dto.sno}"></span>
+			<!-- sno가 3으로 나누어떨어지지 않으면 first값을 표시 -->
+			<span th:unless="${dto.sno%3 == 0}" th:text="${dto.first}"></span>
+		</li>
+	</ul>
+	<hr>
+	<p>타임리프는 삼항연산자를 사용할 수 있는데 특이하게도 단순 if와 같이 2개의 항만을 처리할 수 있다</p>
+	<ul>
+		<li th:each="dto, state : ${list}" th:text="${dto.sno %3 == 0}?${dto.sno}"></li>
+	</ul>
+	<hr>
+	<!-- 삼항연산자로 만족하면 앞의것, 만족하지 않으면 뒤의 것 출력 잘 실행됨 -->
+	<ul>
+		<li th:each="dto, state : ${list}" th:text="${dto.sno %3 == 0}?${dto.sno}:${dto.first}"></li>
+	</ul>
+
+	<!-- dto.sno%3 ==0을 만족하는 dto만 class="target"이 되도록 만든 후, target속성이 된 li만 빨강색을 넣어주기 -->
+	<style>
+		.target{
+			background-color: red;
+		}
+	</style>
+
+	<ul>
+		<li th:each=" dto, state: ${list}" th:class="${dto.sno%3 ==0}?'target'" th:text="${dto}"></li>
+	</ul>
+</body>
+</html>

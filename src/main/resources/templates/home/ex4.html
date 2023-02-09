@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 th:text="${result}"></h1>
+	<h1 th:text="${dto}"></h1>
+
+	<!-- javascript로 값 받아서 콘솔에 띄울 수도 있음 -->
+	<script th:inline="javascript">
+		var msg = [[${result}]]
+		var dto = [[${dto}]]
+		console.log(msg);
+	</script>
+	
+	<table>
+		<tr>
+			<th>번호</th>
+			<td th:text="${dto.sno}"></td>
+		</tr>
+		<tr>
+			<th>처음</th>
+			<td th:text="${dto.first}"></td>
+		</tr>
+		<tr>
+			<th>끝</th>
+			<td th:text="${dto.last}"></td>
+		</tr>
+		<tr>
+			<th>현재시간</th>
+			<td th:text="${dto.regtime}"></td>
+		</tr>
+	</table>
+
+</body>
+</html>
